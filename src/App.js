@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ReactDOM from 'react-dom';
+
+// id=rootにマウントされるコンポーネントと同列のもう1つのトップレベルのコンポーネントのためのcontainer
+const portalRoot = document.getElementById('portal-root');
+
+function List(props) {
+  return (
+    <ul>
+      { props.ids.map(id => <li key={id}>{id}</li>) }
+    </ul>
+  )
+}
+
+function Portal(props) {
+  return ReactDOM.createPortal(
+    <List ids={props.ids}/>,
+    portalRoot
+  );
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const ids = [1, 2, 3];
+
+  return <Portal ids={ids} />
 }
 
 export default App;
